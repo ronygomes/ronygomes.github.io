@@ -1,0 +1,12 @@
+# Site settings
+title: ronygomes.me
+email: rgomes.bd@gmail.com
+description: >-
+  Its not a tutorial website with article, its actually leaning notes for future myself.
+baseurl: ""
+url: "http://ronygomes.me"
+github_username: ronygomes
+
+# Build settings
+markdown: kramdown
+theme: minima
