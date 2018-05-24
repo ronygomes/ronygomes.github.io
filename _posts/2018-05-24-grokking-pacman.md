@@ -6,11 +6,9 @@ tags: pacman
 ---
 
 # Introduction
-Pacman (Arch Linux package manager) is the official front end of
-[libalpm(3)][libalpm], the 'Arch Linux Package Management' library. It uses
-`tar.xz` format as binary package format for simplicity and ease of use.
-Conventionally prefixed `pkg` for denoting pacman package ie.
-`grep-3.1.1-x86_64.pkg.tar.xz`.
+Pacman (Arch Linux package manager) is the official front end of [libalpm(3)][libalpm], the 'Arch Linux Package
+Management' library. It uses `tar.xz` format as binary package format for simplicity and ease of use. Conventionally
+prefixed `pkg` for denoting pacman package ie. `grep-3.1.1-x86_64.pkg.tar.xz`.
 
 # Usage
 
@@ -36,8 +34,7 @@ Following options can be used to alter default path or directory:
 | --gnupg        | GnuPG directory           | /etc/pacman.d/gnupg/   |
 | --logfile      | Action log                | /var/log/pacman.log    |
 
-Change mirror list in `/etc/pacman.d/mirrorlist` as mirror precedence is order
-based.
+Change mirror list in `/etc/pacman.d/mirrorlist` as mirror precedence is order based.
 
 ## Query Installed Packages
 Query details about locally installed packages using __--query__ or __-Q__.
@@ -113,8 +110,8 @@ Update all outdated packages in system:
 $ sudo pacman -Su
 {% endhighlight %}
 
-Install or update package with all its dependencies. Although not recommended
-__--noconfirm__ can be used for bypassing confirmation:
+Install or update package with all its dependencies. Although not recommended __--noconfirm__ can be used for bypassing
+confirmation:
 
 {% highlight shell %}
 $ sudo pacman -S --noconfirm <package-name or group>
@@ -169,8 +166,7 @@ Remove a package or all packages of a group:
 $ sudo pacman -R <package-name or group>
 {% endhighlight %}
 
-Remove package with non required dependencies, add __-n__ for including backup
-configuration:
+Remove package with non required dependencies, add __-n__ for including backup configuration:
 {% highlight shell %}
 $ sudo pacman -Rsn <package-name>
 {% endhighlight %}
@@ -199,23 +195,19 @@ $ pacman -Fxs <regexp>
 {% endhighlight %}
 
 ## Modify Local Database
-__--database__ or __-D__ for modifying local package database attribute and internal
-consistency check.
+__--database__ or __-D__ for modifying local package database attribute and internal consistency check.
 
-Check internal database dependency, __-Dkk__ for ensuring all decencies are in sync
-database:
+Check internal database dependency, __-Dkk__ for ensuring all decencies are in sync database:
 {% highlight shell %}
 $ pacman -Dk
 {% endhighlight %}
 
-Mark package installation reason as dependency. Useful while installing package
-for AUR dependency:
+Mark package installation reason as dependency. Useful while installing package for AUR dependency:
 {% highlight shell %}
 $ sudo pacman -D --asdeps <package-name>
 {% endhighlight %}
 
-Package can be marked __--asexplicit__ for keeping a dependent package even
-when parent package is removed.
+Package can be marked __--asexplicit__ for keeping a dependent package even when parent package is removed.
 
 # Tools Version
 * pacman 5.0.2
