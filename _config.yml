@@ -8,5 +8,6 @@ url: "http://ronygomes.me"
 github_username: ronygomes
 
 # Build settings
+permalink: /:title:output_ext
 markdown: kramdown
 theme: minima
