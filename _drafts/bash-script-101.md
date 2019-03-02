@@ -1,0 +1,289 @@
+---
+layout: post
+title: "Bash Script - 101"
+date: 2019-03-02 18:10:00 +0600
+tags: linux bash bash-script
+---
+
+# Introduction
+Bourne-Again SHell (bash) is a Unix shell first released in 1989 and version 4.0 was released in 2009. Command that can
+be run in bash shell can also be saved as file and run as bash script.
+
+# Getting Help
+Bash has very compact help system bundled with it and can be accessed via
+{% highlight shell %}
+$ help
+{% endhighlight %}
+or if running another shell (zsh, fish)
+{% highlight shell %}
+$ bash -c help
+{% endhighlight %}
+For finding a command type bash builtin command `type` is very helpful. For finding all instance of a command
+{% highlight shell %}
+$ type -a <command-name>
+$ type -a cd # Output: cd is a shell builtin
+{% endhighlight %}
+If its a shell builtin then detailed information of builtin commands can be found using
+{% highlight shell %}
+$ help <command-name>
+{% endhighlight %}
+
+# Print
+`echo` builtin command is used for printing arguments to standard output. Each arguments is printed with space in
+between. If any arguments is variable (starts with $) prints value of the variable
+{% highlight shell %}
+$ echo Hello World             # Output: Hello World
+$ echo Hello     World         # Output: Hello World
+
+# $BASH_VERSION is a builtin variable, prints the running bash version
+$ echo Hello $BASH_VERSION     # Output: Hello 4.4.19(1)-release
+{% endhighlight %}
+
+By default `echo` appends a newline in the end, __-n__ options omits newline
+{% highlight shell %}
+
+# Multiple statements can be written in a line using ;
+$ echo -n Hello ; echo World   # Output: HelloWorld
+{% endhighlight %}
+
+Arguments can be surrounded with double (") or single (') quotes. Variable don't substitutes if single quotes (') is
+used.
+{% highlight shell %}
+$ echo "Hello     World" # Output: Hello     World
+$ echo "Bash $BASH_VERSION"   # Output: Bash 4.4.19(1)-release
+$ echo 'Bash $BASH_VERSION'   # Output: Bash $BASH_VERSION
+{% endhighlight %}
+
+By default `echo` doesn't interprets backslash characters. __-e__ options enables interpretation. See `help echo` for
+complete list of backslash characters.
+{% highlight shell %}
+$ echo "Hello\tWorld\n"       # Output: Hello\tWorld\n
+$ echo -e "Hello\tWorld\n"    # Output: Hello    World
+{% endhighlight %}
+
+# Creating a Bash Script
+For ease of usage and avoiding repeatability command can be written in file and that file can be run as command. File
+name can be any valid unix filename, usually `.sh` extension is appended although not requited. In bash `#` is used for
+line comment, but when first line starts with `#!` followed by a command path, then that command is used when the file
+is run as executable.
+
+{% highlight shell %}
+#/bin/bash
+echo Hello World
+{% endhighlight %}
+
+# Run Script
+Easiest with to run a bash script is using `bash` executable. This will fork another shell and will run inside that
+shell.
+{% highlight shell %}
+$ bash <file-name>
+{% endhighlight %}
+For running in current bash session
+{% highlight shell %}
+$ source <file-name> # or . <file-name>
+{% endhighlight %}
+
+If the file is executable and `#!/bin/bash` is defined, then the file can be run directly
+{% highlight shell %}
+# Make a file executable
+$ chomd +x <file-name>
+# As first line of file is '#!/bin/bash' will be invoked like 
+# /bin/bash <file-name>
+$ ./<file-name>
+{% endhighlight %}
+
+# IO Redirection
+In bash, output of a command can be used as input for another command using `|`. If standard error is also needed `|&`
+is used.
+{% highlight shell %}
+$ cat file-not-exists | wc -l
+# Output:
+# cat: file-not-exits: No such file or directory
+# 0
+$ cat file-not-exists |& cat -n # Output: 1
+{% endhighlight %}
+
+In unix-like operating system there predefined unique open file number or file desiccator is stdin (0), stdout (1) and
+stderr (3). stdout of a command can be send to a file using `>` and using `>>` to append in file.
+
+{% highlight shell %}
+$ cat -n /etc/password 1> <file-name>
+$ cat -n /etc/password > <file-name>   # can omit as 1 is default for output
+$ cat -n /etc/password >> <file-name>  # appends to <file-name>
+
+# For sending only stderr
+$ cat -n /etc/password 2> <file-name>
+$ cat -n /etc/password 2>> <file-name> # appends only stderr to <file-name>
+
+# For sending both stdin and stderr
+$ cat -n /etc/password > <file-name> 2>&1
+$ cat -n /etc/password &> <file-name>  # same as above
+
+{% endhighlight %}
+
+For reading from a file `<` is used.
+{% highlight shell %}
+$ cat -n 0< /etc/passwd
+$ cat -n < /etc/passwd                 # can omit as 0 is default for input
+{% endhighlight %}
+
+# Variable Declaration
+Variable is declared using systax &lt;VARIABLE-NAME&gt;=&lt;VALUE&gt;. There must be no space around `=`. Bash variable
+names are case sensitive and can be named using uppercase and lowercase characters, numbers, underscore. Number can't be
+first character.  It's good practice to always surround variable values with quotes. When using the value of variable $
+is prefixed with the name.
+{% highlight shell %}
+YESTERDAY=Friday
+
+TODAY="Saturday"
+echo $TODAY      # Output: Saturday
+echo ${TODAY}    # same as above
+
+MESSAGE="Load"
+echo "Please wait ${MESSAGE}ing data." # Output: Please wait Loading data.
+
+# Variable can also be expression value
+DATE=$(date +%A)
+
+# Arithmetic expression
+FIVE=$(( 2 + 3 ))
+{% endhighlight %}
+
+
+# Input
+Input can be taken using shell builtin `read` command. __-p__ option is used for prompting text. When user input is
+added its stored in given variable.
+{% highlight shell %}
+$ read -p "Enter Your Name: " INPUT_NAME
+Enter Your Name: John Doe
+$ echo $INPUT_NAME   # Output: John Doe
+{% endhighlight %}
+
+Another options is passing as shell command argument, which can be accessed using positional arguments $1 - $9. $# is a
+total argument count. $0 is running command name.
+
+For the following script
+{% highlight shell %}
+#!/bin/bash
+# Filename: pos-arg.sh
+echo "$# arguments; first: $1, second: $2"
+{% endhighlight %}
+Output will depends on how the script is invoked.
+{% highlight shell %}
+$ ./pos-arr.sh one two       # Output: 2 arguments; first: one, second: two
+$ ./pos-arr.sh one two three # Output: 3 arguments; first: one, second: two
+{% endhighlight %}
+
+# Control Statements
+if/else statement
+{% highlight shell %}
+DATE="Sun"
+# Output: Yay! Weekend
+if [[ "$DATE" = "Sun" ]]; then
+    echo "Yay! Weekend"
+elif [[ "$DATE" = "Tue" ]]; then
+    echo "Work Hard"
+else
+    echo "Boring"
+fi
+{% endhighlight %}
+
+for loop
+
+{% highlight shell %}
+# Output 12345
+for NUM in 1 2 3 4 5; do
+    echo -n $NUM
+done
+
+# Prints all files in /etc
+for FILE in /etc/*; do
+    echo $FILE
+done
+
+# If called like ./for-test.sh one two three
+# Output: one, two, three,
+for ARG in "$@"; do
+    echo $ARG
+done
+
+# If called like ./for-test.sh one two three
+# Output: one two three,
+for ARG in "$*"; do
+    echo $ARG
+done
+{% endhighlight %}
+
+while loop
+
+{% highlight shell %}
+# Output: 54321
+NUM=5
+while [[ "$NUM" -gt 0 ]]; do
+    echo -n $NUM
+    NUM=$(( NUM - 1 ))
+done
+
+# If called with ./while-test.sh one two three
+# Output: one, two, three,
+while [[ "$#" -ne 0 ]]; do
+    echo -n "$1, "
+    shift    # after shift $1 is removed and $2 becames $1
+done
+
+# If INPUT value is not gives, continues to ask
+INPUT=""
+while [[ "$INPUT" = "" ]]; do
+    read -p "Enter Name: " INPUT
+done
+{% endhighlight %}
+switch case
+
+{% highlight shell %}
+DAY="sun"
+# Output: Yay! Weekend
+case "$DAY" in
+    [Ss]un) echo "Yay! Weekend" ;;
+    [Tt]ue) echo "Work Hard" ;;
+    *) echo "Boring" ;;
+esac
+{% endhighlight %}
+# Function
+
+{% highlight shell %}
+function func_one() {
+    echo "Func One"
+}
+
+func_two() {
+    echo "Func Two"
+}
+
+func_with_argument() {
+    echo "Func with Arguments"
+    echo "Count: $#, values: $1, $2"
+}
+
+func_with_return() {
+    echo "Before return"
+    if [[ true ]]; then
+        return
+    fi
+    echo "After return"
+}
+
+func_one         # Output: Func One
+func_two         # Output: Func Two
+func_with_argument One Two
+# Output:
+# Func with Arguments
+# Count: 2, value: One, Two
+func_with_return # Output: Before return
+{% endhighlight %}
+
+# Tools Version
+* bash 4.4.19(1)-release
+
+# Bookmarks
+* [bash(1) Manual Page](https://linux.die.net/man/1/bash)
+* [Wikipedia - Bash (Unix Shell)](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
