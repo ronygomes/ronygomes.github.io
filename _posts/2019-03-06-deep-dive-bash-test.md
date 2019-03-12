@@ -274,6 +274,30 @@ fi
 
 {% endhighlight %}
 
+`if` clauses can also execute based on arithmetic expression using `((` and `))`. If the result of arithmetic expression
+is non-zero then `then` block is executed.
+
+{% highlight shell %}
+if (( 5 - 10 ))
+then
+    echo "Non-Zero numbers are considered True"
+fi
+
+# Output:
+# Non-Zero numbers are considered True
+
+if (( 5 - 5 ))
+then
+    echo "Don't Print"
+else
+    echo "Enters else block"
+fi
+
+# Output:
+# Enters else block
+
+{% endhighlight %}
+
 # [ VS [[
 Bash has another builtin `[[` which is superset of `[`. Its supports all features of `[` plus some more. The most
 useful feature is matching regular expression with `=~`.
