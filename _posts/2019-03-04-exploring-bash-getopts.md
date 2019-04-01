@@ -13,7 +13,7 @@ other command.
 # Usage
 `getopts` has the following signature:
 {% highlight shell %}
-getopts OPTSTRING NAME [ARG]
+getopts OPTSTRING VARIABLE [ARG...]
 {% endhighlight %}
 __OPTSTRING__ is possible options as string. Each time `getopts` is invoked it parses an __ARG__ character using
 __OPTSTRING__. If __ARG__ is omitted `getopts` parses positional parameters (i.e. __$1 - $9__).
@@ -49,16 +49,16 @@ while getopts "vn:" NAME; do
     printf "NAME: %s, OPTIND: %d, OPTARG: %s\n" $NAME $OPTIND $OPTARG
 done
 
-# if run as ./getopts-test.sh -n -v 3
+# if run as ./getopts-test.sh -v -n 3
 # NAME: v, OPTIND: 2, OPTARG:
 # NAME: n, OPTIND: 4, OPTARG: 3
 
-# if run as ./getopts-test.sh -nv3
+# if run as ./getopts-test.sh -vn3
 # NAME: v, OPTIND: 1, OPTARG: 
 # NAME: n, OPTIND: 2, OPTARG: 3
 
 # if run as ./getopts-test.sh -zn3
-# test.sh: illegal option -- z
+# getopts-test.sh: illegal option -- z
 # NAME: ?, OPTIND: 1, OPTARG: 
 # NAME: n, OPTIND: 2, OPTARG: 3
 {% endhighlight %}
