@@ -157,7 +157,7 @@ $ gcc -I "$PWD" -L "$PWD" -o main main.c -lgreet
 {% endhighlight %}
 
 Now if we copy the `libgreet.a` in `/usr/local/lib/` or `/usr/lib/` and copy `greet.h` in `/us/local/include/` or
-`/usr/include//`, then we can compile like below.
+`/usr/include/`, then we can compile like below.
 
 {% highlight shell %}
 $ gcc -o main main.c -lgreet

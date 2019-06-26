@@ -218,7 +218,6 @@ $ rpm -qd bash
 /usr/share/man/man1/..1.gz
 /usr/share/man/man1/:.1.gz
 /usr/share/man/man1/[.1.gz
-## TODO remove ]
 # ... (Showing first 5 lines)
 $ rpm -qc bash
 /etc/skel/.bash_logout

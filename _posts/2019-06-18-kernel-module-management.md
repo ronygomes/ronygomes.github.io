@@ -59,7 +59,7 @@ parm:           nohwcrypt:Disable hardware encryption. (bool)
 `modinfo` lists various detailed information about the module. Some modules takes configurable parameters listed as
 __parm__. This modules takes one bool parameter named __nohwcrypt__.
 
-# Load and Unloaded Modules
+# Load and Unload Modules
 
 Kernel modules can be loaded and removed using `modprobe` command. For loading a command following command is used:
 
