@@ -1,0 +1,7 @@
+<script src="{{ "/assets/js/jquery-3.4.1.min.js" | relative_url }}"></script>
+
+{% if page.script_filename %}
+    {% assign js_file_path = "/assets/js/" | append: page.script_filename | append: ".js" | relative_url %}
+     <script src="{{ js_file_path }}"></script>
+{% endif %}
+
