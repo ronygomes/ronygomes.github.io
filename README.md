@@ -2,6 +2,4 @@
 
 Place to store my thoughts and learning notes for future myself.
 
-Link: [www.ronygomes.me](site-url)
-
-[site-url]: https://www.ronygomes.me
+**Link**: <a target="_blank" href="https://www.ronygomes.me">ronygomes.me</a>
