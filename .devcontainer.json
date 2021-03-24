@@ -1,0 +1,14 @@
+/*
+    Using `Remote - Container' extention VSCode can create docker development environment using this file 
+    Press F1 then select `Remote Containers: Open Folder in Container...'
+*/
+{
+    "name": "blog",
+    "workspaceFolder": "/blog",
+    "workspaceMount": "source=${localWorkspaceFolder}/,target=${containerWorkspaceFolder},type=bind,consistency=delegated",
+    "dockerFile": "Dockerfile",
+    "forwardPorts": [4000],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    }
+}
