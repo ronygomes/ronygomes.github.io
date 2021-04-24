@@ -6,6 +6,7 @@ description: >-
 baseurl: ""
 url: "http://ronygomes.me"
 github_username: ronygomes
+image_cdn_root: https://media.publit.io/file/1d4b
 
 # Build settings
 permalink: /:title:output_ext
