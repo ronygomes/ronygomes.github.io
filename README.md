@@ -19,7 +19,7 @@ $ docker run -it -p 4000:4000 \
     ronygomes/blog jekyll serve -H 0.0.0.0
 ```
 
-## Resources:
+## Resources
 
 * [Kramdown Syntax](https://kramdown.gettalong.org/syntax.html)
 * [GitHub Markdown Syntax](https://docs.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax)

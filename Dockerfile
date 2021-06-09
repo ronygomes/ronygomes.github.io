@@ -13,7 +13,7 @@ WORKDIR /home/jekyll/
 COPY Gemfile /home/jekyll
 COPY Gemfile.lock /home/jekyll
 
-RUN bundler install && rm Gemfile
+RUN bundler install && rm Gemfile Gemfile.lock
 
 WORKDIR /blog
 EXPOSE 4000
