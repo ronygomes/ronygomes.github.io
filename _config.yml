@@ -1,8 +1,7 @@
 # Site settings
 title: ronygomes.me
 email: rgomes.bd@gmail.com
-description: >-
-  Its not a tutorial website with article, its actually learning notes for future myself.
+description: Learning notes for future myself
 baseurl: ""
 url: "http://ronygomes.me"
 github_username: ronygomes
